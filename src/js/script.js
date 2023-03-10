@@ -47,21 +47,23 @@ async function getAllRepos() {
     const data = await fetch("https://api.github.com/users/andrelebioda/repos");
     const res = await data.json();
 
-    const repoData = res.map((repo) => {
-      return {
-        name: repo.full_name,
-        desc: repo.description,
-        topics: repo.topics,
-        stats: {
-          watchers: repo.watchers_count,
-          forks: repo.forks_count,
-          stars: repo.stargazers_count,
-        },
+    const repoData = res
+      .sort((a, z) => a.id - z.id)
+      .map((repo) => {
+        return {
+          name: repo.full_name,
+          desc: repo.description,
+          topics: repo.topics,
+          stats: {
+            watchers: repo.watchers_count,
+            forks: repo.forks_count,
+            stars: repo.stargazers_count,
+          },
 
-        repoURL: repo.html_url,
-        websiteURL: repo.homepage,
-      };
-    });
+          repoURL: repo.html_url,
+          websiteURL: repo.homepage,
+        };
+      });
 
     repoData.forEach((repo) => generateRepoElement(repo));
   } catch (error) {
@@ -86,7 +88,7 @@ function generateRepoElement(repo) {
   repo.topics.forEach((topic) => {
     temp.querySelector(
       ".techs"
-    ).innerHTML += `<span class="${topic}">${topic}</span>`;
+    ).innerHTML += `<span class="${topic}"><span>#</span>${topic}</span>`;
   });
 
   Object.keys(repo.stats).forEach((key) => {
@@ -128,7 +130,6 @@ function checkScrollPosition() {
         active = section;
       }
     }
-    console.log(pos, height, scrollPos, active);
   });
 }
 

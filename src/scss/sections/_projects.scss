@@ -20,11 +20,12 @@
     gap: 2rem;
 
     .project__item {
-      background: rgb(33, 33, 52);
+      background: rgb(33, 33, 52, 0.7);
       border-radius: 0.5rem;
       position: relative;
       outline: 1px solid rgba(255, 255, 255, 0);
       transition: outline 0.3s ease-in-out;
+      backdrop-filter: blur(3px);
 
       &:hover {
         outline: 1px solid rgba(255, 255, 255, 0.3);
@@ -38,12 +39,10 @@
         }
         a {
           display: flex;
-          gap: 0.5rem;
           align-items: center;
           font-weight: 700;
-          img.icon {
-            max-width: 20px;
-            color: #fff;
+          i {
+            margin-right: 0.5rem;
           }
         }
         h3 {
@@ -76,54 +75,54 @@
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            span {
+            > span {
               display: block;
-              font-size: 0.7rem;
+              font-size: 0.825rem;
               color: #fff;
               text-transform: uppercase;
-              line-height: 0;
-              padding: 0.85rem 0.5rem 0.8rem;
               margin-bottom: 0.5rem;
-              letter-spacing: 1px;
-              border: 1px solid;
+              line-height: 1;
+              font-weight: bold;
+
               &:not(:last-of-type) {
-                margin-right: 0.5rem;
+                margin-right: 0.8rem;
+                padding-right: 0.8rem;
+                border-right: 1px solid;
               }
 
               &.html {
-                border-color: rgb(228, 77, 38);
-                background: rgb(228, 77, 38, 0.1);
+                color: rgb(241, 101, 41);
               }
               &.css {
-                border-color: rgb(38, 77, 228);
-                background: rgb(38, 77, 228, 0.1);
+                color: rgb(41, 101, 241);
               }
               &.javascript {
-                border-color: rgb(212, 184, 48);
-                background: rgb(212, 184, 48, 0.1);
+                color: rgb(212, 184, 48);
               }
               &.scss {
-                border-color: rgb(207, 100, 154);
-                background: rgb(207, 100, 154, 0.1);
+                color: rgb(207, 100, 154);
               }
               &[class^="react"] {
-                border-color: rgb(0, 216, 255);
-                background: rgb(0, 216, 255, 0.1);
+                color: rgb(0, 216, 255);
               }
               &[class*="api"] {
-                border-color: rgb(0, 110, 37);
-                background: rgb(0, 110, 37, 0.1);
+                color: rgb(41 169 84);
               }
               &.vite {
-                background: linear-gradient(
-                  120deg,
-                  rgb(189, 52, 254, 0.3) 30%,
-                  rgb(65, 209, 255, 0.3)
+                background: -webkit-linear-gradient(
+                  rgb(189, 52, 254),
+                  rgb(65, 209, 255)
                 );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
               }
               &[class^="next"] {
-                border-color: #fff;
-                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+              }
+              > span {
+                color: inherit;
+                display: inline-block;
+                margin-right: 0.2rem;
               }
             }
           }
@@ -132,6 +131,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            min-height: 26px;
 
             .stats {
               display: grid;
