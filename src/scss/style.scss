@@ -1,0 +1,11 @@
+@import "base/base";
+@import "base/fonts";
+
+//layout
+@import "./layout/nav";
+@import "./layout/footer";
+
+//sections
+@import "./sections/header";
+@import "./sections/aboutme";
+@import "./sections/projects";

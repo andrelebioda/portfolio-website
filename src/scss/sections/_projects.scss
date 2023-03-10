@@ -1,0 +1,197 @@
+.projects {
+  p.intro-text {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    font-weight: 300;
+    max-width: 70rem;
+    margin-bottom: 3rem;
+    @media (max-width: 991px) {
+      font-size: 1.125rem;
+      line-height: 1.3;
+    }
+    a {
+      font-weight: 900;
+      text-decoration: underline;
+    }
+  }
+  .projects__wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+
+    .project__item {
+      background: rgb(33, 33, 52);
+      border-radius: 0.5rem;
+      position: relative;
+      outline: 1px solid rgba(255, 255, 255, 0);
+      transition: outline 0.3s ease-in-out;
+
+      &:hover {
+        outline: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .project__content {
+        padding: 1.5rem;
+        padding-bottom: 10rem;
+        @media (max-width: 808px) {
+          padding-bottom: 1.5rem;
+        }
+        a {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+          font-weight: 700;
+          img.icon {
+            max-width: 20px;
+            color: #fff;
+          }
+        }
+        h3 {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 1rem;
+          line-height: 1.3;
+          text-decoration: underline;
+        }
+        p {
+          font-size: 0.9rem;
+          line-height: 1.7rem;
+          margin: 0.8rem 0rem 1.5rem;
+          color: #ececec;
+        }
+
+        .bottom {
+          position: absolute;
+          bottom: 1.5rem;
+          width: calc(100% - 3rem);
+          @media (max-width: 808px) {
+            position: relative;
+            bottom: 0;
+            width: auto;
+          }
+          .techs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            span {
+              display: block;
+              font-size: 0.7rem;
+              color: #fff;
+              text-transform: uppercase;
+              line-height: 0;
+              padding: 0.85rem 0.5rem 0.8rem;
+              margin-bottom: 0.5rem;
+              letter-spacing: 1px;
+              border: 1px solid;
+              &:not(:last-of-type) {
+                margin-right: 0.5rem;
+              }
+
+              &.html {
+                border-color: rgb(228, 77, 38);
+                background: rgb(228, 77, 38, 0.1);
+              }
+              &.css {
+                border-color: rgb(38, 77, 228);
+                background: rgb(38, 77, 228, 0.1);
+              }
+              &.javascript {
+                border-color: rgb(212, 184, 48);
+                background: rgb(212, 184, 48, 0.1);
+              }
+              &.scss {
+                border-color: rgb(207, 100, 154);
+                background: rgb(207, 100, 154, 0.1);
+              }
+              &[class^="react"] {
+                border-color: rgb(0, 216, 255);
+                background: rgb(0, 216, 255, 0.1);
+              }
+              &[class*="api"] {
+                border-color: rgb(0, 110, 37);
+                background: rgb(0, 110, 37, 0.1);
+              }
+              &.vite {
+                background: linear-gradient(
+                  120deg,
+                  rgb(189, 52, 254, 0.3) 30%,
+                  rgb(65, 209, 255, 0.3)
+                );
+              }
+              &[class^="next"] {
+                border-color: #fff;
+                background: rgba(255, 255, 255, 0.1);
+              }
+            }
+          }
+
+          .statistics {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .stats {
+              display: grid;
+              grid-template-columns: repeat(3, auto);
+              align-items: center;
+              gap: 1rem;
+              .stat {
+                color: #fff;
+                line-height: 1.1rem;
+                display: grid;
+                grid-template-columns: repeat(2, auto);
+                gap: 0.3rem;
+                svg {
+                  path {
+                    fill: #fff;
+                  }
+                }
+                &::after {
+                  content: "";
+                  width: 1rem;
+                  height: 1rem;
+                }
+                &.watchers {
+                  &::after {
+                    background-image: url("/images/icons/watching.svg");
+                  }
+                }
+                &.forks {
+                  &::after {
+                    background-image: url("/images/icons/forks.svg");
+                  }
+                }
+                &.stars {
+                  &::after {
+                    background-image: url("/images/icons/stars.svg");
+                  }
+                }
+              }
+            }
+
+            button {
+              background-color: #fff;
+              color: #000;
+              border: none;
+              border-radius: 0.2rem;
+              transition: all 0.3s ease-in-out;
+              &:hover {
+                background-color: transparent;
+                color: #fff;
+                outline: 1px solid #fff;
+              }
+              a {
+                text-decoration: none;
+                color: inherit;
+                padding: 0.4rem 0.7rem 0.3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
