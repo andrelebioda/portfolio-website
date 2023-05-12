@@ -3,6 +3,7 @@ import "../scss/style.scss";
 
 //define elements
 const btnToggleNav = document.querySelector(".toggle");
+const showMoreProjects = document.getElementById("show-more");
 const navLayer = document.querySelector(".layer");
 const navList = document.querySelector(".navigation");
 const navListItems = Array.from(
@@ -48,7 +49,7 @@ async function getAllRepos() {
     const res = await data.json();
 
     const repoData = res
-      .sort((a, z) => a.id - z.id)
+      .sort((a, z) => Date.parse(z.updated_at) - Date.parse(a.updated_at))
       .map((repo) => {
         return {
           name: repo.full_name,
@@ -66,6 +67,7 @@ async function getAllRepos() {
       });
 
     repoData.forEach((repo) => generateRepoElement(repo));
+    hideProjects();
   } catch (error) {
     console.log(error.message);
   }
@@ -104,6 +106,25 @@ function generateRepoElement(repo) {
   }
 
   projectGrid.appendChild(temp);
+}
+
+let status = "show";
+
+function hideProjects() {
+  const projectItems = Array.from(document.querySelectorAll(".project__item"));
+
+  let active = 6;
+  projectItems
+    .slice(active)
+    .forEach((project) => project.classList.add("hide"));
+
+  showMoreProjects.addEventListener("click", () => {
+    active += 6;
+    projectItems
+      .slice(0, active)
+      .forEach((project) => project.classList.remove("hide"));
+    if (active >= projectItems.length) showMoreProjects.style.display = "none";
+  });
 }
 
 function checkScrollPosition() {
