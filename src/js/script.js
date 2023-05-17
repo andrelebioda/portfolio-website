@@ -11,6 +11,7 @@ const navListItems = Array.from(
 );
 const anchorLinks = Array.from(document.querySelectorAll(".anchor"));
 const projectGrid = document.querySelector(".projects__wrapper");
+const filter = document.querySelector(".filter-tags");
 
 //toggle navigation
 btnToggleNav.addEventListener("click", () => {
@@ -42,7 +43,8 @@ function scrollToElement(anchor) {
   }
 }
 
-//get all repo data and generate content
+/***** get all repo data and generate content *****/
+
 async function getAllRepos() {
   try {
     const data = await fetch("https://api.github.com/users/andrelebioda/repos");
@@ -65,8 +67,8 @@ async function getAllRepos() {
           websiteURL: repo.homepage,
         };
       });
-
     repoData.forEach((repo) => generateRepoElement(repo));
+    generateFilter(repoData);
     hideProjects();
   } catch (error) {
     console.log(error.message);
@@ -74,7 +76,8 @@ async function getAllRepos() {
 }
 getAllRepos();
 
-//generate repo element and show on website
+/***** generate repo element and show on website *****/
+
 function generateRepoElement(repo) {
   //template
   const temp = document
@@ -82,6 +85,9 @@ function generateRepoElement(repo) {
     .content.cloneNode(true);
 
   //content
+  temp
+    .querySelector(".project__item")
+    .setAttribute("data-tags", repo.topics.join(","));
   temp.querySelector(".github-link").setAttribute("href", repo.repoURL);
   temp.querySelector(".title").setAttribute("title", repo.name);
   temp.querySelector(".title").innerText = repo.name;
@@ -108,12 +114,79 @@ function generateRepoElement(repo) {
   projectGrid.appendChild(temp);
 }
 
+/***** Generate filter function ****/
+
+let filterTags = [];
+
+function generateFilter(repoData) {
+  repoData.forEach((repo) => {
+    repo.topics.forEach((topic) => {
+      if (filterTags.includes(topic)) return;
+      filterTags.push(topic);
+    });
+  });
+
+  filterTags
+    .sort((a, b) => a.length - b.length)
+    .forEach((tag) => {
+      let tagElement = document.createElement("span");
+      tagElement.setAttribute("data-tag", tag);
+      tagElement.innerHTML = tag;
+
+      filter.append(tagElement);
+    });
+
+  filterProjects();
+}
+
+function filterProjects() {
+  const tags = Array.from(document.querySelectorAll(".filter-tags > span"));
+  const projectItems = Array.from(document.querySelectorAll(".project__item"));
+  let selectedTags = [];
+
+  tags.forEach((tag) => {
+    tag.addEventListener("click", () => {
+      let topic = tag.dataset.tag;
+
+      tag.classList.toggle("active");
+
+      if (tag.classList.contains("active")) {
+        selectedTags.push(topic);
+      } else {
+        selectedTags = selectedTags.filter((sTags) => !sTags.includes(topic));
+      }
+
+      projectItems.forEach((project) => {
+        let projectTags = Array.from(project.dataset.tags.split(","));
+
+        let hasTag = projectTags.some((pTag) => selectedTags.includes(pTag));
+
+        if (hasTag) {
+          project.classList.remove("hide");
+        } else {
+          project.classList.add("hide");
+        }
+
+        if (selectedTags.length == 0) {
+          project.classList.remove("hide");
+        }
+      });
+
+      if (selectedTags.length > 0) {
+        showMoreProjects.style.display = "none";
+      }
+    });
+  });
+}
+
+/***** Hide projects and generate 'show more'-button *****/
+
 let status = "show";
 
 function hideProjects() {
   const projectItems = Array.from(document.querySelectorAll(".project__item"));
 
-  let active = 6;
+  let active = window.innerWidth > 991 ? 6 : 4;
   projectItems
     .slice(active)
     .forEach((project) => project.classList.add("hide"));
@@ -126,6 +199,8 @@ function hideProjects() {
     if (active >= projectItems.length) showMoreProjects.style.display = "none";
   });
 }
+
+/***** check scrollposition and set active nav *****/
 
 function checkScrollPosition() {
   const sections = document.querySelectorAll("section");

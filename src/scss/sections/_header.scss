@@ -3,13 +3,15 @@ header {
     display: grid;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    // height: 100vh;
     text-align: center;
     .content {
       max-width: 60rem;
       h1 {
         font-size: 7rem;
         margin-bottom: 2rem;
+        // color: rgb(100, 162, 170);
+        // text-shadow: 2px 1px 1px #fff;
         @media (max-width: 992px) {
           font-size: 5rem;
         }
@@ -54,8 +56,8 @@ header {
           flex: 1;
           font-size: 1.125rem;
           font-weight: 500;
-          background-color: #fff;
-          color: #000;
+          background: rgb(33, 33, 52);
+          color: #fff;
           padding: 0.7rem 1.5rem;
           border-radius: 5px;
           border: 1px solid #fff;
@@ -71,8 +73,30 @@ header {
           }
 
           &:hover {
-            color: #fff;
-            background: rgb(33, 33, 52);
+            color: rgb(33, 33, 52);
+            background: #fff;
+          }
+
+          // &.invert {
+          //   color: rgb(33, 33, 52);
+          //   background: #fff;
+          //   &:hover {
+          //     background: rgb(33, 33, 52);
+          //     color: #fff;
+          //   }
+          // }
+        }
+      }
+      .socials {
+        margin-top: 5rem;
+        i {
+          padding-right: 0.3rem;
+        }
+        a {
+          &:hover {
+            span {
+              border-bottom: 1px solid #fff;
+            }
           }
         }
       }
