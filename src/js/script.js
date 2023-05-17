@@ -87,7 +87,7 @@ function generateRepoElement(repo) {
   //content
   temp
     .querySelector(".project__item")
-    .setAttribute("data-tags", repo.topics.join(","));
+    .setAttribute("data-tags", repo.topics.join(",") + ",All");
   temp.querySelector(".github-link").setAttribute("href", repo.repoURL);
   temp.querySelector(".title").setAttribute("title", repo.name);
   temp.querySelector(".title").innerText = repo.name;
@@ -116,7 +116,7 @@ function generateRepoElement(repo) {
 
 /***** Generate filter function ****/
 
-let filterTags = [];
+let filterTags = ["All"];
 
 function generateFilter(repoData) {
   repoData.forEach((repo) => {
@@ -133,6 +133,12 @@ function generateFilter(repoData) {
       tagElement.setAttribute("data-tag", tag);
       tagElement.innerHTML = tag;
 
+      if (tag == "All") {
+        tagElement.classList.add("active");
+        tagElement.setAttribute("id", "all");
+        tagElement.innerText = "Alle Projekte";
+      }
+
       filter.append(tagElement);
     });
 
@@ -142,19 +148,29 @@ function generateFilter(repoData) {
 function filterProjects() {
   const tags = Array.from(document.querySelectorAll(".filter-tags > span"));
   const projectItems = Array.from(document.querySelectorAll(".project__item"));
+  const allTag = document.getElementById("all");
   let selectedTags = [];
 
   tags.forEach((tag) => {
     tag.addEventListener("click", () => {
       let topic = tag.dataset.tag;
 
+      if (topic != "All") allTag.classList.remove("active");
+      if (topic == "All") tags.forEach((tag) => tag.classList.remove("active"));
+
       tag.classList.toggle("active");
 
       if (tag.classList.contains("active")) {
         selectedTags.push(topic);
+
+        if (topic == "All") {
+          selectedTags = [];
+        }
       } else {
         selectedTags = selectedTags.filter((sTags) => !sTags.includes(topic));
       }
+
+      console.log(selectedTags);
 
       projectItems.forEach((project) => {
         let projectTags = Array.from(project.dataset.tags.split(","));
