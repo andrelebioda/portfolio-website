@@ -170,8 +170,6 @@ function filterProjects() {
         selectedTags = selectedTags.filter((sTags) => !sTags.includes(topic));
       }
 
-      console.log(selectedTags);
-
       projectItems.forEach((project) => {
         let projectTags = Array.from(project.dataset.tags.split(","));
 
@@ -184,6 +182,7 @@ function filterProjects() {
         }
 
         if (selectedTags.length == 0) {
+          if (topic != "All") allTag.classList.add("active");
           project.classList.remove("hide");
         }
       });
