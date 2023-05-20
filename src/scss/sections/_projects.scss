@@ -15,16 +15,16 @@
     }
   }
 
-  h3 {
-    display: block;
-    margin-bottom: 0.6rem;
+  strong {
+    font-size: 1.125rem;
+    letter-spacing: 0.1rem;
   }
 
   .filter-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    margin-bottom: 3rem;
+    margin: 0.6rem 0rem 3rem;
 
     span {
       display: block;
